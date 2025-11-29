@@ -4,12 +4,12 @@ pipeline {
     agent any
     
     environment {
-        // Update the main app image name to match the deployment file
-        DOCKER_IMAGE_NAME = 'satyamsri/qualibytes-shop-app'
-        DOCKER_MIGRATION_IMAGE_NAME = 'satyamsri/qualibytes-shop-migration'
+        // Updated image names for QBShop project (DEV)
+        DOCKER_IMAGE_NAME = 'satyamsri/qbshop-app'
+        DOCKER_MIGRATION_IMAGE_NAME = 'satyamsri/qbshop-migration'
         DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
         GITHUB_CREDENTIALS = credentials('github-credentials')
-        GIT_BRANCH = "master"
+        GIT_BRANCH = "dev"     // IMPORTANT: changed to dev
     }
     
     stages {
@@ -24,13 +24,14 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    clone("https://github.com/LondheShubham153/qualibytes-ecommerce-app.git","master")
+                    clone("https://github.com/Satyams-git/Qualibytes-Ecommerce.git", "dev")
                 }
             }
         }
         
         stage('Build Docker Images') {
             parallel {
+                
                 stage('Build Main App Image') {
                     steps {
                         script {
@@ -70,16 +71,14 @@ pipeline {
         stage('Security Scan with Trivy') {
             steps {
                 script {
-                    // Create directory for results
-                  
                     trivy_scan()
-                    
                 }
             }
         }
         
         stage('Push Docker Images') {
             parallel {
+                
                 stage('Push Main App Image') {
                     steps {
                         script {
@@ -106,7 +105,6 @@ pipeline {
             }
         }
         
-        // Add this new stage
         stage('Update Kubernetes Manifests') {
             steps {
                 script {
@@ -115,7 +113,7 @@ pipeline {
                         manifestsPath: 'kubernetes',
                         gitCredentials: 'github-credentials',
                         gitUserName: 'Jenkins CI',
-                        gitUserEmail: 'shubhamnath5@gmail.com'
+                        gitUserEmail: 'jenkins@ci.local'
                     )
                 }
             }
