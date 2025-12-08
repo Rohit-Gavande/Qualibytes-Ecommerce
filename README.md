@@ -97,7 +97,7 @@ sudo ./aws/install
 1. **Clone the Repository:**
 First, clone this repo to your local machine:<br/>
 ```bash
-git clone https://github.com/LondheShubham153/qualibytes-ecommerce-app.git
+git clone https://github.com/Satyams-git/Qualibytes-Ecommerce
 cd terraform
 ```
 2. **Generate SSH Key Pair:**
