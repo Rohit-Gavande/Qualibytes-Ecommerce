@@ -13,7 +13,7 @@ spec:
         - www.qbsho.asriv.shop
       secretName: qbshop-tls-secret
   rules:
-    - host: qbshop.asriv.shop
+    - host: asriv.shop
       http:
         paths:
           - path: /
@@ -24,7 +24,7 @@ spec:
                 port:
                   number: 80
 
-    - host: qbshop.asriv.shop
+    - host: asriv.shop
       http:
         paths:
           - path: /
